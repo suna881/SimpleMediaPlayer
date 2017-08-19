@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SunaMusicPlayer</string>
+    <string name="title_song_detail">Song Detail</string>
+</resources>
