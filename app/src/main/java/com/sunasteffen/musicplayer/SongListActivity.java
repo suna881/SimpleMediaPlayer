@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -42,7 +43,7 @@ public class SongListActivity extends AppCompatActivity {
      * device.
      */
     private boolean mTwoPane;
-    private View recyclerView;
+    private View mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +57,9 @@ public class SongListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        recyclerView = findViewById(R.id.song_list);
-        assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
+        mRecyclerView = findViewById(R.id.song_list);
+        assert mRecyclerView != null;
+        setupRecyclerView((RecyclerView) mRecyclerView);
 
         if (findViewById(R.id.song_detail_container) != null) {
             // The detail container view will be present only in the
@@ -84,6 +85,7 @@ public class SongListActivity extends AppCompatActivity {
         Cursor cursor = contentResolver.query(uri, null, null, null, null);
         long id;
         String title;
+        String artist;
         if (cursor == null) {
             // query failed, handle error.
         } else if (!cursor.moveToFirst()) {
@@ -91,10 +93,12 @@ public class SongListActivity extends AppCompatActivity {
         } else {
             int titleColumn = cursor.getColumnIndex(android.provider.MediaStore.Audio.Media.TITLE);
             int idColumn = cursor.getColumnIndex(android.provider.MediaStore.Audio.Media._ID);
+            int artistColumn = cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
             do {
                 id = cursor.getLong(idColumn);
                 title = cursor.getString(titleColumn);
-                SongContent.addItem(new SongContent.Song(id, title));
+                artist = cursor.getString(artistColumn);
+                SongContent.addItem(new SongContent.Song(id, title, artist));
             } while (cursor.moveToNext());
         }
     }
@@ -106,8 +110,8 @@ public class SongListActivity extends AppCompatActivity {
             case PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     loadSongs();
-                    assert recyclerView != null;
-                    ((RecyclerView) recyclerView).getAdapter().notifyDataSetChanged();
+                    assert mRecyclerView != null;
+                    ((RecyclerView) mRecyclerView).getAdapter().notifyDataSetChanged();
 
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -150,6 +154,7 @@ public class SongListActivity extends AppCompatActivity {
             holder.mItem = mValues.get(position);
             holder.mIdView.setText(String.valueOf(mValues.get(position).id));
             holder.mContentView.setText(mValues.get(position).content);
+            holder.mArtistView.setText(mValues.get(position).artist);
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -186,13 +191,15 @@ public class SongListActivity extends AppCompatActivity {
             public final View mView;
             public final TextView mIdView;
             public final TextView mContentView;
+            public final TextView mArtistView;
             public SongContent.Song mItem;
 
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mIdView = (TextView) view.findViewById(R.id.id);
-                mContentView = (TextView) view.findViewById(R.id.content);
+                mIdView = view.findViewById(R.id.id);
+                mContentView = view.findViewById(R.id.content);
+                mArtistView = view.findViewById(R.id.artist);
             }
 
             @Override

@@ -24,10 +24,6 @@ public class SongContent {
         ITEM_MAP.put(item.id, item);
     }
 
-    private static Song createDummyItem(int position) {
-        return new Song(position, "Item " + position, makeDetails(position));
-    }
-
     private static String makeDetails(int position) {
         StringBuilder builder = new StringBuilder();
         builder.append("Details about Item: ").append(position);
@@ -40,17 +36,13 @@ public class SongContent {
     public static class Song {
         public final long id;
         public final String content;
+        public String artist;
         public String details;
 
-        public Song(long id, String content) {
+        public Song(long id, String content, String artist) {
             this.id = id;
             this.content = content;
-        }
-
-        public Song(long id, String content, String details) {
-            this.id = id;
-            this.content = content;
-            this.details = details;
+            this.artist = artist;
         }
 
         @Override

@@ -13,8 +13,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class MusicPlayerService extends Service implements MediaPlayer.OnCompletionListener, MediaPlayer.OnErrorListener {
 
-    private ConcurrentLinkedQueue<Uri> trackQueue;
-    private MediaPlayer mediaPlayer;
+    private ConcurrentLinkedQueue<Uri> mTrackQueue;
+    private MediaPlayer mMediaPlayer;
 
     @Nullable
     @Override
@@ -25,7 +25,7 @@ public class MusicPlayerService extends Service implements MediaPlayer.OnComplet
     @Override
     public void onCreate() {
         super.onCreate();
-        trackQueue = new ConcurrentLinkedQueue<>();
+        mTrackQueue = new ConcurrentLinkedQueue<>();
     }
 
     @Override
@@ -38,26 +38,26 @@ public class MusicPlayerService extends Service implements MediaPlayer.OnComplet
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
         }
     }
 
     private void addTrackToQueue(Uri trackUri) {
-        if (mediaPlayer == null) {
-            mediaPlayer = MediaPlayer.create(this, trackUri);
-            mediaPlayer.setOnCompletionListener(this);
-            mediaPlayer.start();
+        if (mMediaPlayer == null) {
+            mMediaPlayer = MediaPlayer.create(this, trackUri);
+            mMediaPlayer.setOnCompletionListener(this);
+            mMediaPlayer.start();
         } else {
-            trackQueue.offer(trackUri);
+            mTrackQueue.offer(trackUri);
         }
     }
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
         mediaPlayer.reset();
-        Uri nextTrackUri = trackQueue.poll();
+        Uri nextTrackUri = mTrackQueue.poll();
         if (nextTrackUri != null) {
             try {
                 mediaPlayer.setDataSource(this, nextTrackUri);
