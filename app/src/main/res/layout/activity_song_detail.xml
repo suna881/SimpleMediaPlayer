@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.sunasteffen.sunamusicplayer.SongDetailActivity"
+    tools:context="com.sunasteffen.musicplayer.SongDetailActivity"
     tools:ignore="MergeRootFrame">
 
     <android.support.design.widget.AppBarLayout
@@ -44,10 +44,9 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|start"
+        android:layout_gravity="center"
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@+id/song_detail_container"
-        app:layout_anchorGravity="top|end"
-        app:srcCompat="@android:drawable/stat_notify_chat" />
-
+        app:layout_anchorGravity="bottom|center"
+        app:srcCompat="@android:drawable/ic_media_pause" />
 </android.support.design.widget.CoordinatorLayout>

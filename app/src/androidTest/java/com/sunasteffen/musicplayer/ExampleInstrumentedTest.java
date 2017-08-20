@@ -1,4 +1,4 @@
-package com.sunasteffen.sunamusicplayer;
+package com.sunasteffen.musicplayer;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

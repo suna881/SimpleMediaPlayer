@@ -1,4 +1,4 @@
-package com.sunasteffen.sunamusicplayer;
+package com.sunasteffen.musicplayer;
 
 import org.junit.Test;
 
