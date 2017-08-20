@@ -1,4 +1,4 @@
-package com.sunasteffen.musicplayer.dummy;
+package com.sunasteffen.musicplayer.song;
 
 import java.util.ArrayList;
 import java.util.HashMap;

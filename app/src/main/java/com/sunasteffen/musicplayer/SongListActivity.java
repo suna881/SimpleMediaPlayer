@@ -23,25 +23,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.sunasteffen.musicplayer.dummy.SongContent;
+import com.sunasteffen.musicplayer.song.SongContent;
 
 import java.util.List;
 
-/**
- * An activity representing a list of Songs. This activity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link SongDetailActivity} representing
- * item details. On tablets, the activity presents the list of items and
- * item details side-by-side using two vertical panes.
- */
 public class SongListActivity extends AppCompatActivity {
-
     private static final int PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1000;
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
     private boolean mTwoPane;
     private View mRecyclerView;
 
@@ -62,16 +49,11 @@ public class SongListActivity extends AppCompatActivity {
         setupRecyclerView((RecyclerView) mRecyclerView);
 
         if (findViewById(R.id.song_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
             mTwoPane = true;
         }
     }
 
     private void checkPermission() {
-        // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
         } else {

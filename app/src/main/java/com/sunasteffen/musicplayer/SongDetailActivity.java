@@ -10,12 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-/**
- * An activity representing a single Song detail screen. This
- * activity is only used narrow width devices. On tablet-size devices,
- * item details are presented side-by-side with a list of items
- * in a {@link SongListActivity}.
- */
 public class SongDetailActivity extends AppCompatActivity {
 
     @Override
@@ -33,15 +27,12 @@ public class SongDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         if (savedInstanceState == null) {
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
             Bundle arguments = new Bundle();
             arguments.putLong(SongDetailFragment.ARG_ITEM_ID,
                     getIntent().getLongExtra(SongDetailFragment.ARG_ITEM_ID, 0L));
