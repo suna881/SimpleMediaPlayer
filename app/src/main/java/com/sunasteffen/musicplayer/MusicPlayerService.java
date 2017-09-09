@@ -47,8 +47,10 @@ public class MusicPlayerService extends Service implements MediaPlayer.OnComplet
     private void addTrackToQueue(Uri trackUri) {
         if (mMediaPlayer == null) {
             mMediaPlayer = MediaPlayer.create(this, trackUri);
-            mMediaPlayer.setOnCompletionListener(this);
-            mMediaPlayer.start();
+            if (mMediaPlayer != null) {
+                mMediaPlayer.setOnCompletionListener(this);
+                mMediaPlayer.start();
+            }
         } else {
             mTrackQueue.offer(trackUri);
         }
